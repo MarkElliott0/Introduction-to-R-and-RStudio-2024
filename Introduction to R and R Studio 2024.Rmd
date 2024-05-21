@@ -1,0 +1,266 @@
+---
+title: "Introduction to R - Base Code"
+author: "Mark Elliott"
+date: "2024-05-18"
+output: html_document
+---
+Welcome to Introduction to R and R Studio 
+
+This code file is one part of the resource and can be used alongside the presentation slides within the same repository. 
+
+The topics we will cover as part of this introductory course include what is seen in slide 2 of the presentation. 
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+# Set a Working Directory 
+
+The first thing we're going to do is select our working directory. This can be selected either through code (as below) or using the files selection pane and the cog to set the working directory. The example below sets to my Desktop. Feel free to edit to where works best for you. 
+
+```{r}
+# The function used to select working directory is setwd()
+setwd("C:/Users/MarkE/OneDrive/Desktop")
+```
+
+When looking to set the working directory, you have additional options to 
+
+
+## Creating Projects
+
+Creating a project in allows you to....
+
+
+## Code types 
+
+In Markdown documents - text can be written anywhere outside of the code chunk. 
+
+A code chunk can be produced as per below
+
+To execute within a code chunk, use either the play button in the top right corner of a code chunk, or, when anywhere on the line of code you wish to execute, press 'ctrl' and 'Enter' on your keyboard. 
+
+## Basics of Coding in R - variables and matrices 
+
+```{r}
+# Once you have a code chunk, if you would like to write comments inside of it, you need to begin with at least one hash symbol # 
+# Use the arrow key (<-) to assign an object/variable. You can also use the keyboard shortcut "alt" and "-"
+Code <- 1
+Code <- 2
+# The above will over right itself, so Code will end up equaling 2 
+
+# To navigate this, call you object something slightly different, as per below 
+Code1 <- 1
+Code2 <- 2
+
+# This will create two separate variables Code 1 & 2 
+
+# Base R is also useful as a calculator 
+25 * 25 
+
+# You can save sums to a object/variable 
+# Each of these end up in the Environment tab 
+Sum <- 100*10
+
+# Same output as above but using the sum function 
+Sum <- sum(100*10)
+
+# Vectors, data, matrices and subsetting 
+x <- c(2, 5, 7)
+
+# Show the output of x #
+x 
+
+# For y, we will use a sequence function to produce the values, information within the brackets are the arguments
+y <- seq(from=3, length=3, by = 3)
+
+# Use the question mark in front of the function to find out further information 
+?seq
+
+# Print the output of y 
+y
+
+# Add the values within x and y
+x+y
+
+# Divide the values of x and y
+x/y
+
+# Multiply the values of x and y
+x*y
+
+# Exponentiation of x and y
+x^y
+
+# You can also highlight certain parts of the vector, using the [] with a number. So the below is the second third value within x 
+x[3]
+
+# Additionally, using the colon between values, allows you to select those and anything in between. For example below, everything between 2 and 3 in x. 
+x[2:3]
+
+# Another subset option is to use the negative before the value. So as below everything except the second value
+x[-2]
+
+# Removing more than one element at a time, required the c() within the [] as per below. 
+x[-c(1, 2)]
+
+# The next data type in R we're interested in, are matrices. A matrix can be achieved similar to the code below using the function matrix()
+
+z <- matrix(seq(1, 15), 5, 3) # last two arguments are the dimensions, so in this example 5 rows and 3 columns
+
+# Show the output of z
+z
+
+# In the case above, this has created a matrix of 5 rows and 3 columns
+
+# Just like vectors, you can subset matrices, but using the two dimensions. 
+z[3:5, 2:3] # First is rows, followed by columns
+
+z[, 2] # if you put a comma and don't add a first argument, you will just receive the selected columns
+
+# In the example above, selecting just the second column, has changed it from a matrix to a vector.
+# If you would like to keep it as a matrix, use the additional argument Drop = FALSE
+z[,2, drop = FALSE]
+
+# Check the dimensions (rows and columns) of a dataset using the dim function
+dim(z)
+
+# The ls function shows you the objects you've created. These can also been seen in the enviroment pane
+ls()
+
+# Clean up the environment using the rm() function and include a specific item to remove
+rm(y)
+
+# Use the runif function to create a uniform distribution of data and assign to x 
+x <- runif(60)
+
+# Create a random Gaussian of normal variables 
+y <- rnorm(60)
+
+# plot the variables using the base function plot()
+plot(x, y)
+
+# You can also add additional arguments to the plot function for labeling axis and more 
+plot(x, y, xlab = "Random Uniform", ylab = "Random Normal", pch = "*", col = "Red")
+
+# Additional to the plot function, you can pre-define the windows and whether you want to include multiple plots using the par() function. 
+par(mfrow=c(2, 1)) # panel of plots with two rows and one column 
+
+# Start including plots within the changed panel output
+plot(x,y)
+
+# Histogram function with one argument, in this case, Y. 
+hist(y)
+
+# The next section is going to look deeper into functions in R. 
+```
+
+R uses functions for a large number of its code processes. These functions can be identified as they're followed by brackets (this is usually where you add 'arguments'. But more on this later). 
+
+
+Outputs of code chunks 
+
+Once you run a code chunk / line of code, you will receive an output depending on the code you've tried to run. 
+
+So for example the code 2 + 2, will output [1] 4 
+
+The outputs will also include any Warnings or Errors as part of your code. The example below will also include an error. 
+
+When you receive warning or errors in your code, its time to work on debugging your code. Some of the hints that R Studio give are enough, or you could use websites such as Stack Overflow https://stackoverflow.com/ for support. 
+
+```{r}
+2 + 2
+
+2 ( 2
+```
+
+## Loading data sets in R 
+
+There are multiple ways data can be loaded into the environment in R. 
+You can load via external data sets - using read.csv readxl etc.
+Load via data built into packages - the example below shows a dataset from the NHSR dataset package 
+Load data directly from a SQL database (MS SQL/My SQL etc.)
+
+```{r}
+# The main dataset type for loading into R is via csv. 
+# The function for this is read.csv()
+read.csv('insert file path here.csv')
+
+# You're able to read any file type into R, however, you may require another package to achieve this. 
+# For example excel files (xlsx or xls.) 
+library(readxl)
+
+# R also has the option of connecting directly to a SQL database. 
+library(odbc)
+
+# As a reminder, if you would like to find out something about a package, use the double question marks before the package. 
+??odbc
+
+# Data is also available via some packages. For example, some healthcare open data sets can be loaded via the NHS-R dataset package 
+library(NHSRdatasets)
+
+# Load dataset from the NHSRdatasets package 
+data("LOS_model") # dataset with 300 observations and 5 variables 
+
+
+```
+
+
+## Packages 
+
+Packages are extremely powerful in R. Packages are essentially code used to perform certain functions in R. 
+
+Each package requires two steps. Installation and Loading. You can install a package using a few different methods. You can use the package management tool built into R studio, or you can code it in using the install.packages() function. 
+
+```{r}
+install.packages("dplyr") # Surround the name of the package install with quotations
+
+library(dplyr) # Following installation, you can load the package using the library function. 
+
+```
+
+
+## Functions 
+
+There are hundreds of functions you will learn in your R journey. As you become more advanced, you might also start building your own functions and packages. 
+
+The primary idea of a function is to reduce the amount of code required to perform an action. For example, if you would like to perform data manipulation, similar to what you would perform in SQL, in R. There's a package called Dplyr, which has similar syntax. 
+
+Dplyr is part of the Tidyverse suite of functions. The detailed guidance for the Dplyr package, can be found here https://dplyr.tidyverse.org/ 
+
+```{r}
+# We loaded the Dplyr package above using 
+library(dplyr)
+
+# Some of the primary functions included as part of dplyr are:-
+select() # simlar to the select statement in SQL - which columns you wish to keep or remove
+group_by() # Which columns to group by - used with summarise to reduce dataset size 
+arrange() # Order your dataset, include desc() as an argument within the arrange to reverse the order (defaults to ascending)
+left_join() # Part of the joining function in Dplyr. Can also use right_join(), inner_join()
+summarise() # Create a summary statistic 
+mutate() # Create a number column from other data. 
+# Similarities to SQL
+
+# Strings of dplyr functions can be joined to create more complex actions
+
+# This can be achieved by using the pipe operator %>% (keyboard shortcut is 'ctrl', 'shift' and 'm') 
+
+dataset %>% 
+  select(columns to select) %>% 
+  group_by(column/s to group by) %>% 
+  mutate(create a column from another column, for example the mean of a column) %>% 
+  left_join(another dataset, by = an id)
+
+```
+
+
+## Saving Outputs
+
+Following your analysis, statistical modelling in R, you may want to save the output to use in the future or with another software package for example - Power BI. 
+
+One of the most common saving functions is the write.csv() function in Base R. There are various other options though, including writing your data directly to a MS/My SQL Server. 
+
+```{r}
+write.csv(name_of_dataset_in_R, "Your file name.csv", row.names = FALSE) # row.names = FALSE will not add a column of row numbers. 
+```
+
+
+
